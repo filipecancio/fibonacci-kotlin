@@ -11,11 +11,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up JDK 23
       uses: actions/setup-java@v4
@@ -72,3 +74,77 @@ jobs:
       with:
         name: test-results
         path: test-results/
+
+    - name: Extract test metrics
+      if: always()
+      run: |
+        # Parse XML test results to extract metrics
+        if [ -f "test-results/TEST-junit-jupiter.xml" ]; then
+          TESTS=$(grep -oP 'tests="\K[0-9]+' test-results/TEST-junit-jupiter.xml | head -1)
+          FAILURES=$(grep -oP 'failures="\K[0-9]+' test-results/TEST-junit-jupiter.xml | head -1)
+          ERRORS=$(grep -oP 'errors="\K[0-9]+' test-results/TEST-junit-jupiter.xml | head -1)
+          SKIPPED=$(grep -oP 'skipped="\K[0-9]+' test-results/TEST-junit-jupiter.xml | head -1)
+          
+          PASSED=$((TESTS - FAILURES - ERRORS - SKIPPED))
+          
+          echo "Total Tests: $TESTS"
+          echo "Passed: $PASSED"
+          echo "Failed: $FAILURES"
+          echo "Errors: $ERRORS"
+          echo "Skipped: $SKIPPED"
+          
+          # Create badges directory
+          mkdir -p .github/badges
+          
+          # Determine badge color based on results
+          if [ $FAILURES -eq 0 ] && [ $ERRORS -eq 0 ]; then
+            COLOR="brightgreen"
+            STATUS="passing"
+          else
+            COLOR="red"
+            STATUS="failing"
+          fi
+          
+          # Create badge data as JSON for shields.io endpoint style
+          echo "{\"schemaVersion\": 1, \"label\": \"tests\", \"message\": \"$PASSED/$TESTS passed\", \"color\": \"$COLOR\"}" > .github/badges/tests.json
+          echo "{\"schemaVersion\": 1, \"label\": \"status\", \"message\": \"$STATUS\", \"color\": \"$COLOR\"}" > .github/badges/status.json
+          
+          # Output for use in other steps
+          echo "TESTS=$TESTS" >> $GITHUB_ENV
+          echo "PASSED=$PASSED" >> $GITHUB_ENV
+          echo "FAILURES=$FAILURES" >> $GITHUB_ENV
+          echo "ERRORS=$ERRORS" >> $GITHUB_ENV
+        fi
+
+    - name: Update README with test metrics
+      if: always() && github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      run: |
+        # Only update README on main/master branch pushes
+        if [ -f ".github/badges/tests.json" ]; then
+          # Get current values
+          TESTS="${TESTS:-0}"
+          PASSED="${PASSED:-0}"
+          FAILURES="${FAILURES:-0}"
+          
+          # Update or insert badges section in README
+          if grep -q "<!-- TEST_METRICS_START -->" README.md; then
+            # Update existing section
+            BADGE_COLOR=$([ "$FAILURES" -eq 0 ] && [ "$ERRORS" -eq 0 ] && echo "brightgreen" || echo "red")
+            sed -i '/<!-- TEST_METRICS_START -->/,/<!-- TEST_METRICS_END -->/c\<!-- TEST_METRICS_START -->\n![Build Status](https://github.com/${{ github.repository }}/actions/workflows/build.yml/badge.svg)\n![Tests](https://img.shields.io/badge/tests-'"$PASSED/$TESTS"'%20passed-'"$BADGE_COLOR"')\n<!-- TEST_METRICS_END -->' README.md
+          else
+            # Insert new section after the title
+            BADGE_COLOR=$([ "$FAILURES" -eq 0 ] && [ "$ERRORS" -eq 0 ] && echo "brightgreen" || echo "red")
+            sed -i '1 a\<!-- TEST_METRICS_START -->\n![Build Status](https://github.com/${{ github.repository }}/actions/workflows/build.yml/badge.svg)\n![Tests](https://img.shields.io/badge/tests-'"$PASSED/$TESTS"'%20passed-'"$BADGE_COLOR"')\n<!-- TEST_METRICS_END -->\n' README.md
+          fi
+          
+          # Configure git
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Commit and push if there are changes
+          git add README.md .github/badges/
+          if ! git diff --staged --quiet; then
+            git commit -m "📊 Atualizar métricas de testes no README [skip ci]"
+            git push
+          fi
+        fi
