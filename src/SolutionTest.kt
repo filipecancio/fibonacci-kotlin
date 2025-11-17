@@ -81,7 +81,7 @@ class SolutionTest {
     }
 
     @Test
-    @Timeout(value = 10, unit = TimeUnit.SECONDS)
+    @Timeout(value = 1, unit = TimeUnit.SECONDS)
     @DisplayName("WHEN fib execute n=30 THEN returns 832040")
     fun testFibThirty() {
         val currentValue = 30
