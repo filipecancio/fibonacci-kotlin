@@ -1,6 +1,8 @@
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Timeout
+import java.util.concurrent.TimeUnit
 import kotlin.system.measureNanoTime
 
 class SolutionTest {
@@ -19,6 +21,7 @@ class SolutionTest {
     }
 
     @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
     @DisplayName("WHEN fib execute n=0 THEN returns 0")
     fun testFibZero() {
         val currentValue = 0
@@ -28,6 +31,7 @@ class SolutionTest {
     }
 
     @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
     @DisplayName("WHEN fib execute n=1 THEN returns 1")
     fun testFibOne() {
         val currentValue = 1
@@ -37,6 +41,7 @@ class SolutionTest {
     }
 
     @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
     @DisplayName("WHEN fib execute n=2 THEN returns 1")
     fun testFibTwo() {
         val currentValue = 2
@@ -46,6 +51,7 @@ class SolutionTest {
     }
 
     @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
     @DisplayName("WHEN fib execute n=3 THEN returns 2")
     fun testFibThree() {
         val currentValue = 3
@@ -55,6 +61,7 @@ class SolutionTest {
     }
 
     @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
     @DisplayName("WHEN fib execute n=4 THEN returns 3")
     fun testFibFour() {
         val currentValue = 4
@@ -64,6 +71,7 @@ class SolutionTest {
     }
 
     @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
     @DisplayName("WHEN fib execute n=10 THEN returns 55")
     fun testFibTen() {
         val currentValue = 10
@@ -73,6 +81,7 @@ class SolutionTest {
     }
 
     @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
     @DisplayName("WHEN fib execute n=30 THEN returns 832040")
     fun testFibThirty() {
         val currentValue = 30
@@ -82,6 +91,7 @@ class SolutionTest {
     }
 
     @Test
+    @Timeout(value = 10, unit = TimeUnit.SECONDS)
     @DisplayName("WHEN fib execute n=3030 THEN returns 832040")
     fun testFibThirt30() {
         val currentValue = 3030
