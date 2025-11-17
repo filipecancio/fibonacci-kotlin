@@ -126,7 +126,7 @@ jobs:
       if: always() && github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
       run: |
         # Only update README on main/master branch pushes
-        if [ -f ".github/badges/tests.json" ]; then
+        if [ -f ".github/badges/tests.json" ] && [ -f "test-results/test-list.md" ]; then
           # Get current values
           TESTS="${TESTS:-0}"
           PASSED="${PASSED:-0}"
@@ -145,21 +145,33 @@ jobs:
           
           # Update or insert test results section in README
           if grep -q "<!-- TEST_RESULTS_START -->" README.md; then
-            # Update existing section - remove old section and insert new one
+            # Update existing section - remove old section first
             sed -i '/<!-- TEST_RESULTS_START -->/,/<!-- TEST_RESULTS_END -->/d' README.md
           fi
           
-          # Insert test results section after badges or at the beginning
+          # Insert test results section after badges
           if grep -q "<!-- TEST_METRICS_END -->" README.md; then
-            # Insert after badges section
-            sed -i '/<!-- TEST_METRICS_END -->/a\\\n<!-- TEST_RESULTS_START -->' README.md
-            sed -i '/<!-- TEST_RESULTS_START -->/r test-results/test-list.md' README.md
-            sed -i '/<!-- TEST_RESULTS_START -->/a\<!-- TEST_RESULTS_END -->' README.md
+            # Create a temporary file with the content
+            {
+              sed -n '1,/<!-- TEST_METRICS_END -->/p' README.md
+              echo ""
+              echo "<!-- TEST_RESULTS_START -->"
+              cat test-results/test-list.md
+              echo "<!-- TEST_RESULTS_END -->"
+              sed -n '/<!-- TEST_METRICS_END -->/,$p' README.md | tail -n +2
+            } > README.md.tmp
+            mv README.md.tmp README.md
           else
             # Insert at the beginning if badges section doesn't exist
-            sed -i '1 a\<!-- TEST_RESULTS_START -->' README.md
-            sed -i '/<!-- TEST_RESULTS_START -->/r test-results/test-list.md' README.md
-            sed -i '/<!-- TEST_RESULTS_START -->/a\<!-- TEST_RESULTS_END -->' README.md
+            {
+              sed -n '1p' README.md
+              echo ""
+              echo "<!-- TEST_RESULTS_START -->"
+              cat test-results/test-list.md
+              echo "<!-- TEST_RESULTS_END -->"
+              tail -n +2 README.md
+            } > README.md.tmp
+            mv README.md.tmp README.md
           fi
           
           # Configure git
