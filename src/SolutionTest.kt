@@ -33,7 +33,7 @@ class SolutionTest {
     }
 
     @Test
-    @DisplayName("WHEN fib execute n=3 THEN returns 1")
+    @DisplayName("WHEN fib execute n=3 THEN returns 2")
     fun testFibThree() {
         val currentValue = 3
         val expectedValue = 2
@@ -75,7 +75,7 @@ class SolutionTest {
         //assertion
         assertEquals(
             result,
-            currentInput,
+            expectedValue,
             "Current input: $result is not equal to $expectedValue"
         )
     }
