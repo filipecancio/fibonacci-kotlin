@@ -3,6 +3,8 @@
 # Script para extrair a lista de testes que passaram e falharam do XML de resultados
 
 TEST_XML="test-results/TEST-junit-jupiter.xml"
+TEST_OUTPUT="test-results/test-output.txt"
+METRICS_FILE="test-results/metrics.txt"
 OUTPUT_FILE="test-results/test-list.md"
 
 if [ ! -f "$TEST_XML" ]; then
@@ -28,16 +30,23 @@ PASSED=$((TESTS - FAILURES - ERRORS - SKIPPED))
 echo "**Total:** $TESTS testes | **Passaram:** ✅ $PASSED | **Falharam:** ❌ $((FAILURES + ERRORS))" >> "$OUTPUT_FILE"
 echo "" >> "$OUTPUT_FILE"
 
+# Extrair métricas de execução do stdout se disponível
+if [ -f "$TEST_OUTPUT" ]; then
+    # Extrair apenas as linhas de execution e substituir ponto por vírgula nos números
+    grep "execution:" "$TEST_OUTPUT" | sed 's/\([0-9]\)\.\([0-9]\)/\1,\2/g' > "$METRICS_FILE"
+fi
+
 # Extrair lista de testes que passaram
 echo "### ✅ Testes que Passaram ($PASSED)" >> "$OUTPUT_FILE"
 echo "" >> "$OUTPUT_FILE"
 
-# Usar awk para processar os testes que passaram
+# Processar testes que passaram e adicionar métricas
 awk '
     /<testcase/ {
         in_testcase = 1
         has_error = 0
         display_name = ""
+        test_time = ""
         next
     }
     in_testcase {
@@ -45,19 +54,39 @@ awk '
             match($0, /display-name: (.+)/, arr)
             display_name = arr[1]
         }
+        if ($0 ~ /<testcase.*time="([^"]+)"/) {
+            match($0, /time="([^"]+)"/, arr)
+            test_time = arr[1]
+        }
         if ($0 ~ /<error/ || $0 ~ /<failure/) {
             has_error = 1
         }
         if ($0 ~ /<\/testcase>/) {
             if (!has_error && display_name != "") {
-                print "- " display_name
+                print display_name "|" test_time
             }
             in_testcase = 0
             has_error = 0
             display_name = ""
+            test_time = ""
         }
     }
-' "$TEST_XML" >> "$OUTPUT_FILE"
+' "$TEST_XML" | while IFS='|' read -r display_name test_time; do
+    echo "- $display_name" >> "$OUTPUT_FILE"
+    # Tentar obter métricas do arquivo de métricas
+    if [ -f "$METRICS_FILE" ]; then
+        metric=$(head -n 1 "$METRICS_FILE" 2>/dev/null || echo "")
+        if [ -n "$metric" ]; then
+            # Remover a primeira linha para próxima iteração
+            tail -n +2 "$METRICS_FILE" > "$METRICS_FILE.tmp"
+            mv "$METRICS_FILE.tmp" "$METRICS_FILE"
+            echo "$metric" >> "$OUTPUT_FILE"
+        fi
+    fi
+done
+
+# Limpar arquivos temporários
+rm -f "$METRICS_FILE" "$METRICS_FILE.tmp"
 
 echo "" >> "$OUTPUT_FILE"
 
