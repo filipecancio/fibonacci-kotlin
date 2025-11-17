@@ -34,3 +34,4 @@ bin/
 ### GitHub Actions ###
 lib/
 test-results/
+.github/badges/

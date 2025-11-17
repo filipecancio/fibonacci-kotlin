@@ -1,5 +1,10 @@
 # Fibonacci Kotlin
 
+<!-- TEST_METRICS_START -->
+![Build Status](https://github.com/filipecancio/fibonacci-kotlin/actions/workflows/build.yml/badge.svg)
+![Tests](https://img.shields.io/badge/tests-6%2F7%20passed-red)
+<!-- TEST_METRICS_END -->
+
 Um projeto Kotlin que implementa cálculo de números de Fibonacci usando o sistema de build do IntelliJ IDEA.
 
 ## Estrutura do Projeto
@@ -22,6 +27,13 @@ O projeto inclui um workflow do GitHub Actions (`.github/workflows/build.yml`) q
 4. ✅ Executa a aplicação principal
 5. ✅ Compila e executa os testes
 6. ✅ Faz upload dos resultados dos testes como artefatos
+7. ✅ Extrai métricas dos testes e atualiza os badges no README
+
+### Badges de Métricas
+
+Os badges no topo do README são atualizados automaticamente após cada execução do workflow:
+- **Build Status**: Indica se o último build passou ou falhou
+- **Tests**: Mostra quantos testes passaram do total de testes executados
 
 ### Triggers do Workflow
 
