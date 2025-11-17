@@ -116,6 +116,12 @@ jobs:
           echo "ERRORS=$ERRORS" >> $GITHUB_ENV
         fi
 
+    - name: Extract test list
+      if: always()
+      run: |
+        chmod +x .github/scripts/extract-test-list.sh
+        ./.github/scripts/extract-test-list.sh
+
     - name: Update README with test metrics
       if: always() && github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
       run: |
@@ -135,6 +141,25 @@ jobs:
             # Insert new section after the title
             BADGE_COLOR=$([ "$FAILURES" -eq 0 ] && [ "$ERRORS" -eq 0 ] && echo "brightgreen" || echo "red")
             sed -i '1 a\<!-- TEST_METRICS_START -->\n![Build Status](https://github.com/${{ github.repository }}/actions/workflows/build.yml/badge.svg)\n![Tests](https://img.shields.io/badge/tests-'"$PASSED/$TESTS"'%20passed-'"$BADGE_COLOR"')\n<!-- TEST_METRICS_END -->\n' README.md
+          fi
+          
+          # Update or insert test results section in README
+          if grep -q "<!-- TEST_RESULTS_START -->" README.md; then
+            # Update existing section - remove old section and insert new one
+            sed -i '/<!-- TEST_RESULTS_START -->/,/<!-- TEST_RESULTS_END -->/d' README.md
+          fi
+          
+          # Insert test results section after badges or at the beginning
+          if grep -q "<!-- TEST_METRICS_END -->" README.md; then
+            # Insert after badges section
+            sed -i '/<!-- TEST_METRICS_END -->/a\\\n<!-- TEST_RESULTS_START -->' README.md
+            sed -i '/<!-- TEST_RESULTS_START -->/r test-results/test-list.md' README.md
+            sed -i '/<!-- TEST_RESULTS_START -->/a\<!-- TEST_RESULTS_END -->' README.md
+          else
+            # Insert at the beginning if badges section doesn't exist
+            sed -i '1 a\<!-- TEST_RESULTS_START -->' README.md
+            sed -i '/<!-- TEST_RESULTS_START -->/r test-results/test-list.md' README.md
+            sed -i '/<!-- TEST_RESULTS_START -->/a\<!-- TEST_RESULTS_END -->' README.md
           fi
           
           # Configure git

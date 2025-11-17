@@ -28,12 +28,20 @@ O projeto inclui um workflow do GitHub Actions (`.github/workflows/build.yml`) q
 5. ✅ Compila e executa os testes
 6. ✅ Faz upload dos resultados dos testes como artefatos
 7. ✅ Extrai métricas dos testes e atualiza os badges no README
+8. ✅ Gera uma lista detalhada dos testes que passaram e falharam
 
 ### Badges de Métricas
 
 Os badges no topo do README são atualizados automaticamente após cada execução do workflow:
 - **Build Status**: Indica se o último build passou ou falhou
 - **Tests**: Mostra quantos testes passaram do total de testes executados
+
+### Resultados dos Testes
+
+Logo após os badges, é exibida automaticamente uma lista detalhada dos testes:
+- **✅ Testes que Passaram**: Lista todos os testes que foram executados com sucesso
+- **❌ Testes que Falharam**: Lista os testes que falharam, incluindo o tipo de erro
+- A lista é atualizada automaticamente a cada push na branch `main` ou `master`
 
 ### Triggers do Workflow
 
