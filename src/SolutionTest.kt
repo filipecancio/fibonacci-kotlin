@@ -1,9 +1,22 @@
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import kotlin.system.measureNanoTime
 
 class SolutionTest {
     val solution = Solution()
+    
+    data class ComplexityInfo(
+        val timeComplexity: String,
+        val spaceComplexity: String
+    )
+    
+    private fun getComplexityForInput(n: Int): ComplexityInfo {
+        return ComplexityInfo(
+            timeComplexity = "O(2^n)",
+            spaceComplexity = "O(n)"
+        )
+    }
 
     @Test
     @DisplayName("WHEN fib execute n=0 THEN returns 0")
@@ -70,13 +83,27 @@ class SolutionTest {
 
     fun executeTest(currentInput: Int, expectedValue: Int) {
         //execute
-        val result = solution.fib(currentInput)
-
+        var result: Int = 0
+        val executionTime = measureNanoTime {
+            result = solution.fib(currentInput)
+        }
+        
+        val executionTimeMs = executionTime / 1_000_000.0
+        val complexity = getComplexityForInput(currentInput)
+        
         //assertion
         assertEquals(
-            result,
             expectedValue,
-            "Current input: $result is not equal to $expectedValue"
+            result,
+            """
+            |Expected: $expectedValue, but got: $result
+            |Execution time: ${String.format("%.2f", executionTimeMs)}ms
+            |Time complexity: ${complexity.timeComplexity}
+            |Space complexity: ${complexity.spaceComplexity}
+            """.trimMargin()
         )
+        
+        // Print metrics on success
+        println("execution: ${String.format("%.2f", executionTimeMs)}ms | time complexity: ${complexity.timeComplexity} | space complexity: ${complexity.spaceComplexity}")
     }
 }

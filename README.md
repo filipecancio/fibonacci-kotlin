@@ -91,12 +91,13 @@ wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-commons/1.
 wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.14.0/junit-platform-console-standalone-1.14.0.jar -O lib/junit-platform-console-standalone-1.14.0.jar
 wget https://repo1.maven.org/maven2/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar -O lib/opentest4j-1.3.0.jar
 wget https://repo1.maven.org/maven2/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar -O lib/apiguardian-api-1.1.2.jar
+wget https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/2.1.0/kotlin-stdlib-2.1.0.jar -O lib/kotlin-stdlib-2.1.0.jar
 
 # Compilar testes
 kotlinc -d out/test -cp "out/production:lib/junit-jupiter-api-5.14.0.jar:lib/junit-platform-commons-1.14.0.jar:lib/opentest4j-1.3.0.jar:lib/apiguardian-api-1.1.2.jar" src/SolutionTest.kt
 
 # Executar testes
-java -jar lib/junit-platform-console-standalone-1.14.0.jar execute --class-path "out/production:out/test" --scan-class-path out/test --reports-dir=test-results
+java -jar lib/junit-platform-console-standalone-1.14.0.jar execute --class-path "out/production:out/test:lib/kotlin-stdlib-2.1.0.jar" --scan-class-path out/test --reports-dir=test-results
 ```
 
 ## Configuração do IntelliJ IDEA
