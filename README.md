@@ -1,4 +1,71 @@
 # Fibonacci Kotlin
 
-Practice repository for implementing and testing Fibonacci algorithms in Kotlin. Focus: clean code, TDD with JUnit 5, and performance trade-offs.
+Um projeto Kotlin que implementa cálculo de números de Fibonacci usando o sistema de build do IntelliJ IDEA.
 
+## Estrutura do Projeto
+
+Este projeto usa o sistema de build nativo do IntelliJ IDEA (não Gradle ou Maven) e está configurado com:
+
+- **Código fonte**: `src/Solution.kt`
+- **Testes**: `src/SolutionTest.kt`
+- **Framework de testes**: JUnit 5
+- **Versão do Kotlin**: 2.2
+- **JVM target**: 1.8
+
+## GitHub Actions
+
+O projeto inclui um workflow do GitHub Actions (`.github/workflows/build.yml`) que automaticamente:
+
+1. ✅ Configura o ambiente Java 23 e Kotlin
+2. ✅ Baixa as dependências do JUnit 5 do Maven Central
+3. ✅ Compila o código fonte Kotlin
+4. ✅ Executa a aplicação principal
+5. ✅ Compila e executa os testes
+6. ✅ Faz upload dos resultados dos testes como artefatos
+
+### Triggers do Workflow
+
+O workflow é executado automaticamente quando:
+- Há push para as branches `main` ou `master`
+- Há pull request para as branches `main` ou `master`
+- É acionado manualmente através do GitHub Actions UI
+
+## Build Local
+
+Para compilar e executar localmente:
+
+```bash
+# Compilar código fonte
+kotlinc -d out/production -cp . src/Solution.kt
+
+# Executar aplicação
+kotlin -cp out/production SolutionKt
+
+# Baixar dependências do JUnit (apenas primeira vez)
+mkdir -p lib
+wget https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/5.14.0/junit-jupiter-api-5.14.0.jar -O lib/junit-jupiter-api-5.14.0.jar
+wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-commons/1.14.0/junit-platform-commons-1.14.0.jar -O lib/junit-platform-commons-1.14.0.jar
+wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.14.0/junit-platform-console-standalone-1.14.0.jar -O lib/junit-platform-console-standalone-1.14.0.jar
+wget https://repo1.maven.org/maven2/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar -O lib/opentest4j-1.3.0.jar
+wget https://repo1.maven.org/maven2/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar -O lib/apiguardian-api-1.1.2.jar
+
+# Compilar testes
+kotlinc -d out/test -cp "out/production:lib/junit-jupiter-api-5.14.0.jar:lib/junit-platform-commons-1.14.0.jar:lib/opentest4j-1.3.0.jar:lib/apiguardian-api-1.1.2.jar" src/SolutionTest.kt
+
+# Executar testes
+java -jar lib/junit-platform-console-standalone-1.14.0.jar execute --class-path "out/production:out/test" --scan-class-path out/test --reports-dir=test-results
+```
+
+## Configuração do IntelliJ IDEA
+
+O projeto está configurado para usar:
+- Sistema de build do IntelliJ IDEA
+- Configurações armazenadas no diretório `.idea/`
+- Arquivo de módulo: `fibonacci-kotlin.iml`
+
+## Diretórios Ignorados
+
+Os seguintes diretórios são ignorados pelo Git:
+- `out/` - Saída da compilação
+- `lib/` - Dependências baixadas
+- `test-results/` - Resultados dos testes
