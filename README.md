@@ -5,6 +5,29 @@
 ![Tests](https://img.shields.io/badge/tests-6%2F7%20passed-red)
 <!-- TEST_METRICS_END -->
 
+<!-- TEST_RESULTS_START -->
+## Resultados dos Testes
+
+**Total:** 7 testes | **Passaram:** ✅ 6 | **Falharam:** ❌ 1
+
+### ✅ Testes que Passaram (6)
+
+- WHEN fib execute n=10 THEN returns 55
+- WHEN fib execute n=0 THEN returns 0
+- WHEN fib execute n=3 THEN returns 2
+- WHEN fib execute n=4 THEN returns 3
+- WHEN fib execute n=1 THEN returns 1
+- WHEN fib execute n=2 THEN returns 1
+
+### ❌ Testes que Falharam (1)
+
+- WHEN fib execute n=30 THEN returns 832040 (java.lang.StackOverflowError)
+
+---
+*Última atualização: 2025-11-17 10:05:21 UTC*
+<!-- TEST_RESULTS_END -->
+
+
 Um projeto Kotlin que implementa cálculo de números de Fibonacci usando o sistema de build do IntelliJ IDEA.
 
 ## Estrutura do Projeto
@@ -28,12 +51,20 @@ O projeto inclui um workflow do GitHub Actions (`.github/workflows/build.yml`) q
 5. ✅ Compila e executa os testes
 6. ✅ Faz upload dos resultados dos testes como artefatos
 7. ✅ Extrai métricas dos testes e atualiza os badges no README
+8. ✅ Gera uma lista detalhada dos testes que passaram e falharam
 
 ### Badges de Métricas
 
 Os badges no topo do README são atualizados automaticamente após cada execução do workflow:
 - **Build Status**: Indica se o último build passou ou falhou
 - **Tests**: Mostra quantos testes passaram do total de testes executados
+
+### Resultados dos Testes
+
+Logo após os badges, é exibida automaticamente uma lista detalhada dos testes:
+- **✅ Testes que Passaram**: Lista todos os testes que foram executados com sucesso
+- **❌ Testes que Falharam**: Lista os testes que falharam, incluindo o tipo de erro
+- A lista é atualizada automaticamente a cada push na branch `main` ou `master`
 
 ### Triggers do Workflow
 
