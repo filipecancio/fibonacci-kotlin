@@ -88,7 +88,10 @@ if [ $FAILED_COUNT -gt 0 ]; then
             }
             if ($0 ~ /<\/testcase>/) {
                 if (has_error && display_name != "") {
-                    print "- " display_name " (" error_type ")"
+                    print "- " display_name
+                    if (error_type != "") {
+                        print "> error caused by " error_type
+                    }
                 }
                 in_testcase = 0
                 has_error = 0
@@ -96,7 +99,44 @@ if [ $FAILED_COUNT -gt 0 ]; then
                 error_type = ""
             }
         }
-    ' "$TEST_XML" >> "$OUTPUT_FILE"
+    ' "$TEST_XML" | while IFS= read -r line; do
+        if [[ $line == "> error caused by "* ]]; then
+            error_type="${line#> error caused by }"
+            description=""
+            case "$error_type" in
+                *"StackOverflowError"*)
+                    description="pilha de execução esgotada devido a recursão excessiva"
+                    ;;
+                *"OutOfMemoryError"*)
+                    description="memória insuficiente para executar a operação"
+                    ;;
+                *"AssertionError"*|*"AssertionFailedError"*)
+                    description="valor esperado não corresponde ao valor obtido"
+                    ;;
+                *"NullPointerException"*)
+                    description="tentativa de acessar um objeto nulo"
+                    ;;
+                *"ArrayIndexOutOfBoundsException"*)
+                    description="índice fora dos limites do array"
+                    ;;
+                *"ArithmeticException"*)
+                    description="erro aritmético na operação"
+                    ;;
+                *"IllegalArgumentException"*)
+                    description="argumento inválido fornecido ao método"
+                    ;;
+                *"TimeoutException"*)
+                    description="operação excedeu o tempo limite de execução"
+                    ;;
+                *)
+                    description="erro durante a execução do teste"
+                    ;;
+            esac
+            echo "> error caused by $error_type ($description)"
+        else
+            echo "$line"
+        fi
+    done >> "$OUTPUT_FILE"
 fi
 
 echo "" >> "$OUTPUT_FILE"
