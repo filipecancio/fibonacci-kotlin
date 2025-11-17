@@ -6,58 +6,77 @@ class SolutionTest {
     val solution = Solution()
 
     @Test
-    @DisplayName("WHEN n=0 THEN returns 0")
+    @DisplayName("WHEN fib execute n=0 THEN returns 0")
     fun testFibZero() {
-        val expected = 0
-        val actual = solution.fib(0)
-        assertEquals(expected, actual, "Fib(0) deveria ser 0")
+        val currentValue = 0
+        val expectedValue = 0
+
+        executeTest(currentValue, expectedValue)
     }
 
     @Test
-    @DisplayName("WHEN n=1 THEN returns 1")
+    @DisplayName("WHEN fib execute n=1 THEN returns 1")
     fun testFibOne() {
-        val expected = 1
-        val actual = solution.fib(1)
-        assertEquals(expected, actual, "Fib(1) deveria ser 1")
+        val currentValue = 1
+        val expectedValue = 1
+
+        executeTest(currentValue, expectedValue)
     }
 
     @Test
-    @DisplayName("WHEN n=2 THEN returns 1")
+    @DisplayName("WHEN fib execute n=2 THEN returns 1")
     fun testFibTwo() {
-        val expected = 1
-        val actual = solution.fib(2)
-        assertEquals(expected, actual, "Fib(2) deveria ser 1")
+        val currentValue = 2
+        val expectedValue = 1
+
+        executeTest(currentValue, expectedValue)
     }
 
     @Test
-    @DisplayName("WHEN n=3 THEN returns 2")
+    @DisplayName("WHEN fib execute n=3 THEN returns 1")
     fun testFibThree() {
-        val expected = 2
-        val actual = solution.fib(3)
-        assertEquals(expected, actual, "Fib(3) deveria ser 2")
+        val currentValue = 3
+        val expectedValue = 2
+
+        executeTest(currentValue, expectedValue)
     }
 
     @Test
-    @DisplayName("WHEN n=4 THEN returns 3")
+    @DisplayName("WHEN fib execute n=4 THEN returns 3")
     fun testFibFour() {
-        val expected = 3
-        val actual = solution.fib(4)
-        assertEquals(expected, actual, "Fib(4) deveria ser 3")
+        val currentValue = 4
+        val expectedValue = 3
+
+        executeTest(currentValue, expectedValue)
     }
 
     @Test
-    @DisplayName("WHEN n=10 THEN returns 55")
+    @DisplayName("WHEN fib execute n=10 THEN returns 55")
     fun testFibTen() {
-        val expected = 55
-        val actual = solution.fib(10)
-        assertEquals(expected, actual, "Fib(10) deveria ser 55")
+        val currentValue = 10
+        val expectedValue = 55
+
+        executeTest(currentValue, expectedValue)
     }
 
     @Test
-    @DisplayName("WHEN n=30 THEN returns 832040")
+    @DisplayName("WHEN fib execute n=30 THEN returns 832040")
     fun testFibThirty() {
-        val expected = 832040
-        val actual = solution.fib(30)
-        assertEquals(expected, actual, "Fib(30) deveria ser 832040")
+        val currentValue = 832040
+        val expectedValue = 30
+
+        executeTest(currentValue, expectedValue)
+    }
+
+    fun executeTest(currentInput: Int, expectedValue: Int) {
+        //execute
+        val result = solution.fib(currentInput)
+
+        //assertion
+        assertEquals(
+            result,
+            currentInput,
+            "Current input: $result is not equal to $expectedValue"
+        )
     }
 }
