@@ -2,29 +2,34 @@
 
 <!-- TEST_METRICS_START -->
 ![Build Status](https://github.com/filipecancio/fibonacci-kotlin/actions/workflows/build.yml/badge.svg)
-![Tests](https://img.shields.io/badge/tests-6%2F7%20passed-red)
+![Tests](https://img.shields.io/badge/tests-7%2F7%20passed-brightgreen)
 <!-- TEST_METRICS_END -->
 
 <!-- TEST_RESULTS_START -->
 ## Resultados dos Testes
 
-**Total:** 7 testes | **Passaram:** ✅ 6 | **Falharam:** ❌ 1
+**Total:** 7 testes | **Passaram:** ✅ 7 | **Falharam:** ❌ 0
 
-### ✅ Testes que Passaram (6)
+### ✅ Testes que Passaram (7)
 
 - WHEN fib execute n=10 THEN returns 55
+execution: 3,78ms | time complexity: O(2^n) | space complexity: O(n)
 - WHEN fib execute n=0 THEN returns 0
+execution: 0,00ms | time complexity: O(2^n) | space complexity: O(n)
 - WHEN fib execute n=3 THEN returns 2
+execution: 0,03ms | time complexity: O(2^n) | space complexity: O(n)
+- WHEN fib execute n=30 THEN returns 832040
+execution: 0,01ms | time complexity: O(2^n) | space complexity: O(n)
 - WHEN fib execute n=4 THEN returns 3
+execution: 0,00ms | time complexity: O(2^n) | space complexity: O(n)
 - WHEN fib execute n=1 THEN returns 1
+execution: 0,03ms | time complexity: O(2^n) | space complexity: O(n)
 - WHEN fib execute n=2 THEN returns 1
+execution: 0,00ms | time complexity: O(2^n) | space complexity: O(n)
 
-### ❌ Testes que Falharam (1)
-
-- WHEN fib execute n=30 THEN returns 832040 (java.lang.StackOverflowError)
 
 ---
-*Última atualização: 2025-11-17 10:05:21 UTC*
+*Última atualização: 2025-11-17 16:30:13 UTC*
 <!-- TEST_RESULTS_END -->
 
 

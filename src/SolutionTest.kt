@@ -75,8 +75,8 @@ class SolutionTest {
     @Test
     @DisplayName("WHEN fib execute n=30 THEN returns 832040")
     fun testFibThirty() {
-        val currentValue = 832040
-        val expectedValue = 30
+        val currentValue = 30
+        val expectedValue = 832040
 
         executeTest(currentValue, expectedValue)
     }

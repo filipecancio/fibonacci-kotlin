@@ -67,7 +67,7 @@ jobs:
           execute \
           --class-path "out/production:out/test:lib/kotlin-stdlib-2.1.0.jar" \
           --scan-class-path out/test \
-          --reports-dir=test-results
+          --reports-dir=test-results | tee test-results/test-output.txt
 
     - name: Upload test results
       if: always()
