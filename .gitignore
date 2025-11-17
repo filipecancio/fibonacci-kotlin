@@ -30,3 +30,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### GitHub Actions ###
+lib/
+test-results/
