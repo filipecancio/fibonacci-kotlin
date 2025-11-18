@@ -100,11 +100,23 @@ class SolutionTest {
         executeTest(currentValue, expectedValue)
     }
 
+
     fun executeTest(currentInput: Int, expectedValue: Int) {
         //execute
         var result: Int = 0
-        val executionTime = measureNanoTime {
-            result = solution.fib(currentInput)
+        val timeoutMs = 1000L
+        val executor = java.util.concurrent.Executors.newSingleThreadExecutor()
+        val executionTime = kotlin.system.measureNanoTime {
+            val future = executor.submit<Int> { solution.fib(currentInput) }
+            try {
+                result = future.get(timeoutMs, java.util.concurrent.TimeUnit.MILLISECONDS)
+            } catch (te: java.util.concurrent.TimeoutException) {
+                future.cancel(true)
+                executor.shutdownNow()
+                org.junit.jupiter.api.Assertions.fail("Execution timed out after ${timeoutMs}ms for input $currentInput")
+            } finally {
+                executor.shutdown()
+            }
         }
         
         val executionTimeMs = executionTime / 1_000_000.0
