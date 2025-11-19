@@ -22,7 +22,7 @@ class Solution {
             intArrayOf(1, 1),
             intArrayOf(1, 0),
         )
-        val baseFib = intArrayOf(0, 1)
+        val baseFib = intArrayOf(1, 0)
 
         val matrix: Matrix = baseMatrix.power(n - 1)
         return matrix.toFib(baseFib)[0]

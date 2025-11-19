@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test
 
 class SolutionTest {
     val solution = Solution()
-    
+
     data class ComplexityInfo(
         val timeComplexity: String,
         val spaceComplexity: String
     )
-    
+
     private fun getComplexityForInput(n: Int): ComplexityInfo {
         return ComplexityInfo(
             timeComplexity = "O(2^n)",
@@ -20,71 +20,52 @@ class SolutionTest {
     @Test
     @DisplayName("WHEN fib execute n=0 THEN returns 0")
     fun testFibZero() {
-        val currentValue = 0
-        val expectedValue = 0
-
-        executeTest(currentValue, expectedValue)
+        executeTest(0, 0)
     }
 
     @Test
     @DisplayName("WHEN fib execute n=1 THEN returns 1")
     fun testFibOne() {
-        val currentValue = 1
-        val expectedValue = 1
-
-        executeTest(currentValue, expectedValue)
+        executeTest(1, 1)
     }
 
     @Test
     @DisplayName("WHEN fib execute n=2 THEN returns 1")
     fun testFibTwo() {
-        val currentValue = 2
-        val expectedValue = 1
-
-        executeTest(currentValue, expectedValue)
+        executeTest(2, 1)
     }
 
     @Test
     @DisplayName("WHEN fib execute n=3 THEN returns 2")
     fun testFibThree() {
-        val currentValue = 3
-        val expectedValue = 2
-
-        executeTest(currentValue, expectedValue)
+        executeTest(3, 2)
     }
 
     @Test
     @DisplayName("WHEN fib execute n=4 THEN returns 3")
     fun testFibFour() {
-        val currentValue = 4
-        val expectedValue = 3
-
-        executeTest(currentValue, expectedValue)
+        executeTest(4, 3)
     }
 
     @Test
     @DisplayName("WHEN fib execute n=10 THEN returns 55")
     fun testFibTen() {
-        val currentValue = 10
-        val expectedValue = 55
-
-        executeTest(currentValue, expectedValue)
+        executeTest(10, 55)
     }
 
     @Test
     @DisplayName("WHEN fib execute n=30 THEN returns 832040")
     fun testFibThirty() {
-        val currentValue = 30
-        val expectedValue = 832040
-
-        executeTest(currentValue, expectedValue)
+        executeTest(30, 832040)
     }
 
+    // Alterei para n=45, que é um dos maiores Fibs que cabem num Int positivo.
+    // n=46 já estoura o Int em algumas implementações dependendo do sinal.
     @Test
-    @DisplayName("WHEN fib execute n=3030 THEN returns 832040")
-    fun testFibThirt30() {
-        val currentValue = 3030
-        val expectedValue = 832040
+    @DisplayName("WHEN fib execute n=45 THEN returns 1134903170")
+    fun testFibFortyFive() {
+        val currentValue = 45
+        val expectedValue = 1134903170 // Limite seguro do Int
 
         executeTest(currentValue, expectedValue)
     }
@@ -124,6 +105,13 @@ class SolutionTest {
         )
 
         // Print metrics on success
-        println("execution: ${String.format("%.2f", executionTimeMs)}ms | time complexity: ${complexity.timeComplexity} | space complexity: ${complexity.spaceComplexity}")
+        println(
+            "execution: ${
+                String.format(
+                    "%.2f",
+                    executionTimeMs
+                )
+            }ms | time complexity: ${complexity.timeComplexity} | space complexity: ${complexity.spaceComplexity}"
+        )
     }
 }
