@@ -120,7 +120,7 @@ Bem durante a iteração, você vai:
 
 <!-- tabs:start -->
 #### **🐍 Python**
-```python []
+```python
 class Solution:
     def fib(self, n: int) -> int:
         if n < 2: return n
@@ -241,7 +241,7 @@ Parece assustador, mas pensando de uma forma simples, há uma matrix base que se
 
 <!-- tabs:start -->
 #### **🐍 Python**
-```python []
+```python
 class Solution:
     def fib(self, n: int) -> int:
         if n < 2: return n
@@ -368,7 +368,7 @@ Ela também terá duas versões constantes delas que é a nossa matriz indentida
 
 <!-- tabs:start -->
 #### **🐍 Python**
-```python []
+```python
 class Matrix:
     def __init__(self, data):
         self.data = data
@@ -455,7 +455,7 @@ Para realizar o cálculo de multiplicação de matrizes vamos usar os conceitos 
 
 <!-- tabs:start -->
 #### **🐍 Python**
-```python []
+```python
 def multiply(self, other):
         
         if isinstance(other, Matrix):
@@ -590,7 +590,7 @@ Assim temos a função power completa!
 
 <!-- tabs:start -->
 #### **🐍 Python**
-```python []
+```python
 def power(self, n: int):
     if n == 0: return Matrix.IDENTITY_MATRIX
     if n == 1: return self
@@ -667,7 +667,7 @@ Aqui embaixo, você vê o código completo. Eu seguimentei para que a pudessemos
 
 <!-- tabs:start -->
 #### **🐍 Python**
-```python []
+```python
 class Solution:
     def fib(self, n: int) -> int:
         if n < 2: return n
