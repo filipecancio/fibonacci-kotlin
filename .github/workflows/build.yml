@@ -215,14 +215,14 @@ jobs:
         if [ -f "index.html" ]; then
           cp index.html _site/
         else
-          echo "Warning: index.html not found"
+          echo "Error: index.html not found"
           exit 1
         fi
         
         if [ -f "README.md" ]; then
           cp README.md _site/
         else
-          echo "Warning: README.md not found"
+          echo "Error: README.md not found"
           exit 1
         fi
         
@@ -231,8 +231,8 @@ jobs:
         fi
         
         # Copy additional Docsify files if docs directory exists and is not empty
-        if [ -d "docs" ] && [ "$(ls -A docs)" ]; then
-          cp -r docs/. _site/
+        if [ -d "docs" ]; then
+          cp -r docs/. _site/ 2>/dev/null || true
         fi
     
     - name: Upload artifact
