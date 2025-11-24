@@ -214,7 +214,7 @@ jobs:
         cp README.md _site/
         cp .nojekyll _site/
         
-        # Se houver outros arquivos necessários para o Docsify, copie aqui
+        # Copy additional Docsify files if docs directory exists
         if [ -d "docs" ]; then
           cp -r docs/* _site/
         fi
