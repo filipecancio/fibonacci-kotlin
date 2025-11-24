@@ -11,8 +11,8 @@ Na solução recursiva vamos colocar:
 - E a expressão matemática `f(n) = f(n-1) = f(n-2)`
 
 <details>
-<summary>☕ Ver solução em Java</summary>
-```python []
+<summary>☕ Ver solução em python</summary>
+```python
 class Solution:
     def fib(self, n: int) -> int:
         match n:
@@ -22,7 +22,9 @@ class Solution:
                 return self.fib(n - 1) + self.fib(n - 2)
 ```
 </details>
-```java []
+<details>
+<summary>☕ Ver solução em java</summary>
+```java
 class Solution {
     public int fib(int n) {
         return switch (n) {
@@ -32,6 +34,9 @@ class Solution {
     }
 }
 ```
+</details>
+<details>
+<summary>☕ Ver solução em kotlin</summary>
 ```kotlin []
 class Solution {
     fun fib(n: Int): Int = when(n) {
@@ -40,6 +45,9 @@ class Solution {
         }
 }
 ```
+</details>
+<details>
+<summary>☕ Ver solução em swift</summary>
 ```swift []
 class Solution {
     func fib(_ n: Int) -> Int {
@@ -50,6 +58,9 @@ class Solution {
     }
 }
 ```
+</details>
+<details>
+<summary>☕ Ver solução em dart</summary>
 ```dart []
 class Solution {
   int fib(int n) => switch (n) {
@@ -58,6 +69,7 @@ class Solution {
   };
 }
 ```
+</details>
 
 É uma solução simples e compreensiva, porém acredite não é a das melhores. 
 
