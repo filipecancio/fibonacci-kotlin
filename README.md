@@ -1,3 +1,5 @@
+# Headline
+
 [Link do desafio leetcode](https://leetcode.com/problems/fibonacci-number/description/)
 [Link da solução leetcode](https://leetcode.com/problems/fibonacci-number/solutions/7369391/some-ways-to-solve-and-trying-to-underst-2cra)
 
@@ -10,9 +12,10 @@ Na solução recursiva vamos colocar:
 - Nosso caso base `n = 0` e `n = 1`
 - E a expressão matemática `f(n) = f(n-1) = f(n-2)`
 
-<details>
-<summary>🐍 python</summary>
-    
+<!-- tabs:start -->
+
+#### **🐍 Python**
+
 ```python
 class Solution:
     def fib(self, n: int) -> int:
@@ -23,10 +26,8 @@ class Solution:
                 return self.fib(n - 1) + self.fib(n - 2)
 ```
 
-</details>
-<details>
-<summary>☕ java</summary>
-    
+#### **☕ Java**
+
 ```java
 class Solution {
     public int fib(int n) {
@@ -38,11 +39,9 @@ class Solution {
 }
 ```
 
-</details>
-<details>
-<summary>💜 kotlin</summary>
-    
-```kotlin []
+#### **💜 Kotlin**
+
+```kotlin
 class Solution {
     fun fib(n: Int): Int = when(n) {
             0, 1 -> n
@@ -51,26 +50,22 @@ class Solution {
 }
 ```
 
-</details>
-<details>
-<summary>🐦 swift</summary>
-    
-```swift []
+#### **🐦 Swift**
+
+```swift
 class Solution {
     func fib(_ n: Int) -> Int {
         return switch n {
-            case 0,1: n
-            default: fib(n-1) + fib(n-2)
+            case 0, 1: n
+            default: fib(n - 1) + fib(n - 2)
         }
     }
 }
 ```
 
-</details>
-<details>
-<summary>🎯 dart</summary>
-    
-```dart []
+#### **🎯 Dart**
+
+```dart
 class Solution {
   int fib(int n) => switch (n) {
     0 || 1 => n,
@@ -78,8 +73,8 @@ class Solution {
   };
 }
 ```
+<!-- tabs:end -->
 
-</details>
 
 É uma solução simples e compreensiva, porém acredite não é a das melhores. 
 
@@ -125,6 +120,8 @@ Bem durante a iteração, você vai:
 
 `c` morre no fim de cada ciclo da iteração, ele so serve pra fazer a troca de valores depois da soma. No fim da iteração o valor em `i-1` sempre irá corresponder ao `f(n)` do próximo valor de `i` e assim que acaba temos de fato `f(n)`.
 
+<!-- tabs:start -->
+#### **🐍 Python**
 ```python []
 class Solution:
     def fib(self, n: int) -> int:
@@ -136,7 +133,9 @@ class Solution:
             
         return a
 ```
-```java []
+#### **☕ Java**
+
+```java
 class Solution {
     public int fib(int n) {
         if (n < 2) return n;
@@ -163,7 +162,9 @@ class Solution {
     }
 }
 ```
-```kotlin []
+#### **💜 Kotlin**
+
+```kotlin
 class Solution {
     fun fib(n: Int): Int {
         if (n < 2) return n
@@ -176,7 +177,9 @@ class Solution {
     }
 }
 ```
-```swift []
+#### **🐦 Swift**
+
+```swift
 class Solution {
     func fib(_ n: Int) -> Int {
         if n < 2 {return n}
@@ -189,7 +192,9 @@ class Solution {
     }
 }
 ```
-```dart []
+#### **🎯 Dart**
+
+```dart
 class Solution {
   int fib(int n) {
     if(n < 2) return n;
@@ -203,6 +208,7 @@ class Solution {
   }
 }
 ```
+<!-- tabs:end -->
 
 Você pode ter olhado o código correspondente da sua linguagem e passado reto nas outras, mas se parar e olhar com calma, cada linguagem tem uma forma interessante de iterar os valores e de passar entre os ponteiros `a`, `b` e `c`. Na real, alguns nem tem o ponteiro `c`, legal né?
 
@@ -234,6 +240,9 @@ De forma resumida existe uma expressão matemática de que o valor de fibonacci 
 
 Parece assustador, mas pensando de uma forma simples, há uma matrix base que se você multiplica por ela mesma n-1 vezes, você consegue chegar em uma matrix que multiplicada pelo array `[0,1]` ( ou `[fib(0) fib(1)]`), voce retorna o array `[fib(n) fib(n-1)]`. Uma vez que você tem esse array, basta você retornar o primeiro valor dele.
 
+
+<!-- tabs:start -->
+#### **🐍 Python**
 ```python []
 class Solution:
     def fib(self, n: int) -> int:
@@ -245,7 +254,9 @@ class Solution:
         return result_vector[0]
 
 ```
-```java []
+#### **☕ Java**
+
+```java
 class Solution {
     public int fib(int n) {
         if (n < 2) return n;
@@ -258,7 +269,9 @@ class Solution {
 }
 
 ```
-```kotlin []
+#### **💜 Kotlin**
+
+```kotlin
 class Solution {
 
     fun fib(n: Int): Int {
@@ -269,7 +282,9 @@ class Solution {
     }
 }
 ```
-```swift []
+#### **🐦 Swift**
+
+```swift
 class Solution {
     func fib(_ n: Int) -> Int {
         if n < 2 { return n }
@@ -281,7 +296,9 @@ class Solution {
 }
 
 ```
-```dart []
+#### **🎯 Dart**
+
+```dart
 class Solution {
   int fib(int n) {
     if (n < 2) return n;
@@ -291,6 +308,7 @@ class Solution {
   }
 }
 ```
+<!-- tabs:end -->
 
 Olhando esse código fica fácil pensar que temos dois desafios:
 - criar um código que multiplique matrizes 2x2
@@ -350,6 +368,8 @@ ela tem 3 rpopriedade:
 Ela também terá duas versões constantes delas que é a nossa matriz indentidade e a nossa matriz base. Em orientação a objetos chamamos de valores estáticos (ou constantes mesmo).
 
 
+<!-- tabs:start -->
+#### **🐍 Python**
 ```python []
 class Matrix:
     def __init__(self, data):
@@ -365,7 +385,9 @@ class Matrix:
 Matrix.IDENTITY_MATRIX = Matrix([[1, 0], [0, 1]])
 Matrix.BASE_MATRIX = Matrix([[1, 1], [1, 0]])
 ```
-```java []
+#### **☕ Java**
+
+```java
 record Matrix(
     int[][] data
 ) {
@@ -379,7 +401,9 @@ record Matrix(
 }
 ```
 
-```kotlin []
+#### **💜 Kotlin**
+
+```kotlin
 data class Matrix(
     val data: Array<IntArray>
 ){
@@ -393,7 +417,9 @@ data class Matrix(
     fun power(n: Int): Matrix {}
 }
 ```
-```swift []
+#### **🐦 Swift**
+
+```swift
 struct Matrix {
     let data: [[Int]]
 
@@ -405,7 +431,9 @@ struct Matrix {
     func power(_ n: Int) -> Matrix {}
 }
 ```
-```dart []
+#### **🎯 Dart**
+
+```dart
 extension type const Matrix(
     List<List<int>> data
 ) {
@@ -417,6 +445,8 @@ extension type const Matrix(
   List<int> multipliyTwo( List<int> b) {}
   Matrix power(int n){}
 ```
+<!-- tabs:end -->
+
 É importante observar a peculiaridade do conceito de classes/objeto entre linguagens.
 - Para `python`vamos usar a mesma propriedade para os dois tipos matrizes, e colocamos um if/else para tratar quando for cada caso.
 - Para `dart`colocamo o nome `multipliyTwo` para a multiplicação de matrix 2x1
@@ -424,6 +454,9 @@ Isso foi necessário pois ambas as linguagens nao aceitam o conceito de sobrecar
 
 Para realizar o cálculo de multiplicação de matrizes vamos usar os conceitos básicos aprendidos em sala de aula:
 
+
+<!-- tabs:start -->
+#### **🐍 Python**
 ```python []
 def multiply(self, other):
         
@@ -450,7 +483,9 @@ def multiply(self, other):
         raise ValueError("Tipo não suportado para multiplicação")
 
 ```
-```java []
+#### **☕ Java**
+
+```java
 Matrix multiply(Matrix b) {
     return new Matrix(new int[][]{
             {
@@ -471,7 +506,9 @@ int[] multiply(int[] b) {
     };
 }
 ```
-```kotlin []
+#### **💜 Kotlin**
+
+```kotlin
 fun multiply(b: Matrix): Matrix = Matrix(
     arrayOf(
         intArrayOf(
@@ -490,7 +527,9 @@ fun multiply(b: IntArray): IntArray = intArrayOf(
     this.data[1][0] * b[0] + this.data[1][1] * b[1]
 )
 ```
-```swift []
+#### **🐦 Swift**
+
+```swift
 func multiply(_ b: Matrix) -> Matrix {
     return Matrix(data: [
         [
@@ -511,7 +550,9 @@ func multiply(_ b: [Int]) -> [Int] {
     ]
 }
 ```
-```dart []
+#### **🎯 Dart**
+
+```dart
 Matrix multiply (Matrix b) {
     return Matrix([
       [
@@ -531,6 +572,8 @@ Matrix multiply (Matrix b) {
     ];
   }
 ```
+<!-- tabs:end -->
+
 Leve o tempo que precisar para processar esse código. Ele é uma emaranhado de coordenadas. Se fazer isso no carderno já é um desafio, aqui não seria diferente. Mas funções feitas, falta a nossa funcão de pontência, `power`. 
 
 Para usarmos nossa estratégia de ouro (complexidade $O(\log n)$) vamo usar o conceito de **Top-Down da recursão**, ou **dividir para conquistar**. No nosso primeiro algoritmo usamos recursão no final do código, desta vez vamos usar no começo! Assim como visto no teste de mesa, vamos fatorar as metades das potencias ja coletando o valor delas e chamando a própria função (claro que vamos colocar o caso base primeiro, se não a função vai se chamar infinitamente).
@@ -546,6 +589,9 @@ Para um valor de `n = 7` temos que para $mˆ7$ `half` seria $mˆ3$ e `square` se
 
 Assim temos a função power completa!
 
+
+<!-- tabs:start -->
+#### **🐍 Python**
 ```python []
 def power(self, n: int):
     if n == 0: return Matrix.IDENTITY_MATRIX
@@ -556,7 +602,9 @@ def power(self, n: int):
 
     return square if n % 2 == 0 else self.multiply(square)
 ```
-```java []
+#### **☕ Java**
+
+```java
 Matrix power(int n) {
         if (n == 0) return IDENTITY_MATRIX;
         if (n == 1) return this;
@@ -568,7 +616,9 @@ Matrix power(int n) {
     }
 
 ```
-```kotlin []
+#### **💜 Kotlin**
+
+```kotlin
 fun power(n: Int): Matrix {
         if (n == 0) return Matrix.IDENTITY_MATRIX
         if (n == 1) return this
@@ -579,7 +629,9 @@ fun power(n: Int): Matrix {
         return if (n % 2 == 1) this.multiply(square) else square
     }
 ```
-```swift []
+#### **🐦 Swift**
+
+```swift
 func power(_ n: Int) -> Matrix {
         if (n == 0) { return Matrix.IDENTITY_MATRIX }
         if (n == 1) { return self }
@@ -590,7 +642,9 @@ func power(_ n: Int) -> Matrix {
         return n % 2 == 0 ? square : self.multiply(square)
     }
 ```
-```dart []
+#### **🎯 Dart**
+
+```dart
 Matrix power(int n){
     if (n == 0) return Matrix.IDENTITY_MATRIX;
     if (n == 1) return this;
@@ -603,6 +657,7 @@ Matrix power(int n){
 
   }
 ```
+<!-- tabs:end -->
 
 Em resumo:
 
@@ -611,6 +666,9 @@ Space complexity: $O(\log n)$ (sim isso mesmo!)
 
 Aqui embaixo, você vê o código completo. Eu seguimentei para que a pudessemos passa por todo o código com calma para facilitar o entendimento.
 
+
+<!-- tabs:start -->
+#### **🐍 Python**
 ```python []
 class Solution:
     def fib(self, n: int) -> int:
@@ -662,7 +720,9 @@ class Matrix:
 Matrix.IDENTITY_MATRIX = Matrix([[1, 0], [0, 1]])
 Matrix.BASE_MATRIX = Matrix([[1, 1], [1, 0]])
 ```
-```java []
+#### **☕ Java**
+
+```java
 class Solution {
     public int fib(int n) {
         if (n < 2) return n;
@@ -711,7 +771,9 @@ record Matrix(int[][] data) {
 }
 
 ```
-```kotlin []
+#### **💜 Kotlin**
+
+```kotlin
 class Solution {
 
     fun fib(n: Int): Int {
@@ -762,7 +824,9 @@ data class Matrix(val data: Array<IntArray>){
     }
 }
 ```
-```swift []
+#### **🐦 Swift**
+
+```swift
 class Solution {
     func fib(_ n: Int) -> Int {
         if n < 2 { return n }
@@ -810,7 +874,9 @@ struct Matrix {
     }
 }
 ```
-```dart []
+#### **🎯 Dart**
+
+```dart
 class Solution {
   int fib(int n) {
     if (n < 2) return n;
@@ -856,6 +922,7 @@ extension type const Matrix(List<List<int>> data) {
   }
 }
 ```
+<!-- tabs:end -->
 
 Já acabou Jéssica? não! e se na verdade, eu queria fazer você ~torrar a sua mente~ conhecer o conceito de potencia de matrizes para apresentar um modelo mais simples e sucinto de top down?
 
