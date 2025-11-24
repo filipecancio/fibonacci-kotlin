@@ -207,7 +207,7 @@ jobs:
     - name: Setup Pages
       uses: actions/configure-pages@v4
     
-    - name: Preparar arquivos para GitHub Pages
+    - name: Prepare files for GitHub Pages
       run: |
         mkdir -p _site
         cp index.html _site/
