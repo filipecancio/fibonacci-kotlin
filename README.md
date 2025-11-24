@@ -11,7 +11,7 @@ Na solução recursiva vamos colocar:
 - E a expressão matemática `f(n) = f(n-1) = f(n-2)`
 
 <details>
-<summary>☕ Ver solução em python</summary>
+<summary>🐍 python</summary>
     
 ```python
 class Solution:
@@ -25,7 +25,7 @@ class Solution:
 
 </details>
 <details>
-<summary>☕ Ver solução em java</summary>
+<summary>☕ java</summary>
     
 ```java
 class Solution {
@@ -40,7 +40,7 @@ class Solution {
 
 </details>
 <details>
-<summary>☕ Ver solução em kotlin</summary>
+<summary>💜 kotlin</summary>
     
 ```kotlin []
 class Solution {
@@ -53,7 +53,7 @@ class Solution {
 
 </details>
 <details>
-<summary>☕ Ver solução em swift</summary>
+<summary>🐦 swift</summary>
     
 ```swift []
 class Solution {
@@ -68,7 +68,7 @@ class Solution {
 
 </details>
 <details>
-<summary>☕ Ver solução em dart</summary>
+<summary>🎯 dart</summary>
     
 ```dart []
 class Solution {
