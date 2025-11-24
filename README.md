@@ -1,5 +1,3 @@
-# Headline
-
 [Link do desafio leetcode](https://leetcode.com/problems/fibonacci-number/description/)
 [Link da solução leetcode](https://leetcode.com/problems/fibonacci-number/solutions/7369391/some-ways-to-solve-and-trying-to-underst-2cra)
 
