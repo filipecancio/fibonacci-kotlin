@@ -210,13 +210,29 @@ jobs:
     - name: Prepare files for GitHub Pages
       run: |
         mkdir -p _site
-        cp index.html _site/
-        cp README.md _site/
-        cp .nojekyll _site/
         
-        # Copy additional Docsify files if docs directory exists
-        if [ -d "docs" ]; then
-          cp -r docs/* _site/
+        # Copy required files with existence checks
+        if [ -f "index.html" ]; then
+          cp index.html _site/
+        else
+          echo "Warning: index.html not found"
+          exit 1
+        fi
+        
+        if [ -f "README.md" ]; then
+          cp README.md _site/
+        else
+          echo "Warning: README.md not found"
+          exit 1
+        fi
+        
+        if [ -f ".nojekyll" ]; then
+          cp .nojekyll _site/
+        fi
+        
+        # Copy additional Docsify files if docs directory exists and is not empty
+        if [ -d "docs" ] && [ "$(ls -A docs)" ]; then
+          cp -r docs/. _site/
         fi
     
     - name: Upload artifact
