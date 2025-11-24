@@ -1,4 +1,5 @@
-[Link](https://leetcode.com/problems/fibonacci-number/description/)
+[Link do desafio leetcode](https://leetcode.com/problems/fibonacci-number/description/)
+[Link da solução leetcode](https://leetcode.com/problems/fibonacci-number/solutions/7369391/some-ways-to-solve-and-trying-to-underst-2cra)
 
 A lógica do fibonacci é bem simples. O número atual é resultado da soma do número anterior mais o seu anterior `(n-1)+(n-2)`. Considerando apenas o conjunto dos números naturais, adicionamos uma regra para os números `0` e `1`, cujo os seus correspondentes são eles mesmos `f(0) = 0` e `f(1)=1` e assim temos a sequência `0 1 1 2 3 5 ...`
 
@@ -9,7 +10,8 @@ Na solução recursiva vamos colocar:
 - Nosso caso base `n = 0` e `n = 1`
 - E a expressão matemática `f(n) = f(n-1) = f(n-2)`
 
-
+<details>
+<summary>☕ Ver solução em Java</summary>
 ```python []
 class Solution:
     def fib(self, n: int) -> int:
@@ -19,6 +21,7 @@ class Solution:
             case _:
                 return self.fib(n - 1) + self.fib(n - 2)
 ```
+</details>
 ```java []
 class Solution {
     public int fib(int n) {
