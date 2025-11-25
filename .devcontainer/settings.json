@@ -1,4 +1,3 @@
-
 {
     "editor.fontFamily": "fira-code-nerd, FiraCode Nerd Font, Consolas,'CourierNew', monospace",
     "editor.fontLigatures": true,
@@ -35,5 +34,22 @@
     "editor.formatOnSave": true,
     "spellright.language": [
         "pt-BR"
-    ]
+    ],
+    "code-runner.runInTerminal": true,
+    "code-runner.clearPreviousOutput": true,
+    "code-runner.executorMap": {
+        "kotlin": "mkdir -p ${fileDirname}/build && kotlinc \"${file}\" -d \"${fileDirname}/build\" && kotlin -classpath \"${fileDirname}/build\" \"${fileBasenameNoExtension}Kt\"",
+        "java": "mkdir -p ${fileDirname}/build && javac -d \"${fileDirname}/build\" \"${file}\" && java -cp \"${fileDirname}/build\" \"${fileBasenameNoExtension}\"",
+        "swift": "mkdir -p ${fileDirname}/build && swiftc \"${file}\" -o \"${fileDirname}/build/${fileBasenameNoExtension}\" && \"${fileDirname}/build/${fileBasenameNoExtension}\"",
+        "dart": "mkdir -p ${fileDirname}/build && dart compile exe \"${file}\" -o \"${fileDirname}/build/${fileBasenameNoExtension}\" && \"${fileDirname}/build/${fileBasenameNoExtension}\"",
+        "python": "python3 \"${file}\""
+    },
+    "code-runner.executorMapByFileExtension": {
+        ".kt": "mkdir -p ${fileDirname}/build && kotlinc \"${file}\" -d \"${fileDirname}/build\" && kotlin -classpath \"${fileDirname}/build\" \"${fileBasenameNoExtension}Kt\"",
+        ".kts": "kotlinc -script \"${file}\"",
+        ".java": "mkdir -p ${fileDirname}/build && javac -d \"${fileDirname}/build\" \"${file}\" && java -cp \"${fileDirname}/build\" \"${fileBasenameNoExtension}\"",
+        ".swift": "mkdir -p ${fileDirname}/build && swiftc \"${file}\" -o \"${fileDirname}/build/${fileBasenameNoExtension}\" && \"${fileDirname}/build/${fileBasenameNoExtension}\"",
+        ".dart": "mkdir -p ${fileDirname}/build && dart compile exe \"${file}\" -o \"${fileDirname}/build/${fileBasenameNoExtension}\" && \"${fileDirname}/build/${fileBasenameNoExtension}\"",
+        ".py": "python3 \"${file}\""
+    }
 }
