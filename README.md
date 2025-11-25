@@ -210,14 +210,17 @@ class Solution {
 
 Você pode ter olhado o código correspondente da sua linguagem e passado reto nas outras, mas se parar e olhar com calma, cada linguagem tem uma forma interessante de iterar os valores e de passar entre os ponteiros `a`, `b` e `c`. Na real, alguns nem tem o ponteiro `c`, legal né?
 
-Uma característica que essas linguagens tem em comum é o swap, a capacidade de troca de valores entre variáveis. Vou deixar aqui uma listinha de possibilidade de swap entre linguagens.
+Uma característica que essas linguagens tem em comum é o swap, a capacidade de troca de valores entre variáveis. Vou deixar aqui uma listinha de possibilidade de swap entre linguagens. (clique nas linguagens para saber mais).
 
 | Linguagem| Atribuição de valores | Troca de valores |
 | - | - | - | 
-| Java	| `int a = 1; int b = 0;`| `a = (b += a) - a;`	|
-| Kotlin| `var (a, b) = 0 to 1` |	`var (a, b) = 1 to 0`|
-| Swift	| `var (a, b) = (0, 1)` | `(a, b) = (b, a + b)`| 
-| Dart| `var (a, b) = (0, 1)` |	`(a, b) = (b, a + b)`|
+| [Python](./doc/python) | `a, b = 1, 0` | `a,b = b, a`|
+| [Java](./doc/java)	| `int a = 1; int b = 0;`| `a = (b += a) - a;`	|
+| [Kotlin](./doc/kotlin)| `var (a, b) = 0 to 1` |	`var (a, b) = 1 to 0`|
+| [Swift](./doc/swift)	| `var (a, b) = (0, 1)` | `(a, b) = (b, a + b)`| 
+| [Dart](./doc/dart) | `var (a, b) = (0, 1)` |	`(a, b) = (b, a + b)`|
+
+
 
 Essas sobreposições de valores causam um efeito significativo nessa versão do algoritmo de fibonacci, a solução em termos de espaço passa a ser $O(1)$, já a de tempo, $O(n)$. Porque? Bem, temos os seguintes pontos:
 
