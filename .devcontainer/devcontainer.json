@@ -1,0 +1,23 @@
+{
+  "name": "fibonacci-kotlin Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu:22.04",
+  "customizations": {
+        "vscode": {
+            "extensions": [
+                "james-yu.latex-workshop",
+                "nickfode.latex-formatter",
+                "mathematic.vscode-latex",
+                "ms-azuretools.vscode-docker",
+                "meezilla.json",
+                "valentjn.vscode-ltex",
+                "entuent.fira-code-nerd-font",
+                "akamud.vscode-theme-onedark",
+                "pkief.material-icon-theme",
+                "eamodio.gitlens",
+                "tecosaur.latex-utilities"
+            ],
+    },
+},
+  "postCreateCommand": "mkdir -p .vscode && cp /workspaces/fibonacci-kotlin/.devcontainer/vscode/settings.json .vscode/ && sudo apt-get update && sudo apt-get install -y wget unzip && wget https://download.jetbrains.com/kotlin/compiler/kotlin-compiler-1.9.10.zip -O /tmp/kotlin-compiler.zip && unzip /tmp/kotlin-compiler.zip -d /opt/kotlin && rm /tmp/kotlin-compiler.zip",
+  "remoteUser": "vscode"
+}
