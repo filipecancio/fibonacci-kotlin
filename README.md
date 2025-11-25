@@ -214,11 +214,11 @@ Uma característica que essas linguagens tem em comum é o swap, a capacidade de
 
 | Linguagem| Atribuição de valores | Troca de valores |
 | - | - | - | 
-| [Python](./doc/python) | `a, b = 1, 0` | `a,b = b, a`|
-| [Java](./doc/java)	| `int a = 1; int b = 0;`| `a = (b += a) - a;`	|
-| [Kotlin](./doc/kotlin)| `var (a, b) = 0 to 1` |	`var (a, b) = 1 to 0`|
-| [Swift](./doc/swift)	| `var (a, b) = (0, 1)` | `(a, b) = (b, a + b)`| 
-| [Dart](./doc/dart) | `var (a, b) = (0, 1)` |	`(a, b) = (b, a + b)`|
+| [Python](./doc/python/python01.md) | `a, b = 1, 0` | `a,b = b, a`|
+| [Java](./doc/java/java01.md)	| `int a = 1; int b = 0;`| `a = (b += a) - a;`	|
+| [Kotlin](./doc/kotlin/kotlin01.md)| `var (a, b) = 0 to 1` |	`var (a, b) = 1 to 0`|
+| [Swift](./doc/swift/swift01.md)	| `var (a, b) = (0, 1)` | `(a, b) = (b, a + b)`| 
+| [Dart](./doc/dart/dart1.md) | `var (a, b) = (0, 1)` |	`(a, b) = (b, a + b)`|
 
 
 
