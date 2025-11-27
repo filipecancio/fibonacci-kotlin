@@ -6,17 +6,19 @@ exec >> "$BUILD_LOG" 2>&1
 
 echo "postCreate: running as $(id -un)" | tee -a "$BUILD_LOG"
 
-# Install SDKMAN for the vscode user if not present
-if [ "$(id -un)" = "vscode" ] || [ -n "${REMOTE_USER:-}" ] ; then
-  USER_HOME="$HOME"
+# Determine user home (prefer REMOTE_USER or vscode)
+if [ -n "${REMOTE_USER:-}" ]; then
+  TARGET_USER="$REMOTE_USER"
 else
-  USER_HOME="/home/vscode"
+  TARGET_USER="vscode"
 fi
 
-# Install SDKMAN non-interactively for the vscode user
+USER_HOME="/home/${TARGET_USER}"
+
+# Install SDKMAN non-interactively for the target user if not present
 if [ ! -d "$USER_HOME/.sdkman" ]; then
-  echo "Installing SDKMAN for user at $USER_HOME" | tee -a "$BUILD_LOG"
-  su -s /bin/bash -c "curl -s 'https://get.sdkman.io' | bash" vscode || true
+  echo "Installing SDKMAN for user $TARGET_USER at $USER_HOME" | tee -a "$BUILD_LOG"
+  su - "$TARGET_USER" -s /bin/bash -c "curl -s 'https://get.sdkman.io' | bash" || true
   # Ensure SDKMAN init in bash profile
   PROFILE="$USER_HOME/.bashrc"
   if ! grep -q 'sdkman-init.sh' "$PROFILE" 2>/dev/null; then
@@ -27,15 +29,15 @@ else
   echo "SDKMAN already installed at $USER_HOME/.sdkman" | tee -a "$BUILD_LOG"
 fi
 
-# Make sure user bin is in PATH
+# Make sure user bin is in PATH and owned by the user
 mkdir -p "$USER_HOME/.local/bin"
-chown -R vscode:vscode "$USER_HOME/.local" || true
+chown -R "$TARGET_USER":"$TARGET_USER" "$USER_HOME/.local" || true
 
 # Quick verification of installed tools
 echo "--- Verification after postCreate ---" | tee -a "$BUILD_LOG"
-su -s /bin/bash -c 'echo "java:"; java -version || true' vscode
-su -s /bin/bash -c 'echo "kotlinc:"; kotlinc -version || true' vscode
-su -s /bin/bash -c 'echo "kotlin:"; kotlin -version || true' vscode
-su -s /bin/bash -c 'echo "swift:"; if command -v swift >/dev/null 2>&1; then swift --version; else echo "swift: not found"; fi' vscode
+su - "$TARGET_USER" -s /bin/bash -c 'echo "java:"; java -version || true'
+su - "$TARGET_USER" -s /bin/bash -c 'echo "kotlinc:"; kotlinc -version || true'
+su - "$TARGET_USER" -s /bin/bash -c 'echo "kotlin:"; kotlin -version || true'
+su - "$TARGET_USER" -s /bin/bash -c 'echo "swift:"; if command -v swift >/dev/null 2>&1; then swift --version; else echo "swift: not found"; fi'
 
 echo "postCreate finished: $(date)" | tee -a "$BUILD_LOG"
