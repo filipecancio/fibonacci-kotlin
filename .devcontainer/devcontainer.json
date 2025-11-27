@@ -41,6 +41,6 @@
       }
     }
   },
-  "postCreateCommand": "mkdir -p .vscode && cp .devcontainer/panda-theme.json .vscode/panda-theme.json || true",
+  "postCreateCommand": "mkdir -p .vscode && cp .devcontainer/panda-theme.json .vscode/panda-theme.json || true && bash .devcontainer/postCreate.sh",
   "remoteUser": "vscode"
 }

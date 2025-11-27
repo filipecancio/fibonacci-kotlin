@@ -35,14 +35,23 @@ RUN bash -lc 'set -eux; ( \
 
 # Install Swift (pre-packaged release for Ubuntu 22.04). Adjust SWIFT_VERSION if you need a newer release.
 RUN bash -lc 'set -eux; ( \
-  SWIFT_VERSION=5.9.3 \
-  && SWIFT_TAR="swift-${SWIFT_VERSION}-RELEASE-ubuntu22.04.tar.gz" \
-  && SWIFT_URL="https://swift.org/builds/swift-${SWIFT_VERSION}-release/ubuntu2204/swift-${SWIFT_VERSION}-RELEASE/${SWIFT_TAR}" \
-  && mkdir -p /opt/swift \
-  && curl -fsSL "$SWIFT_URL" -o /tmp/swift.tar.gz \
-  && tar -xzf /tmp/swift.tar.gz -C /opt/swift --strip-components=1 \
-  && rm /tmp/swift.tar.gz \
-  && ln -s /opt/swift/usr/bin/swift /usr/local/bin/swift || true \
+  SWIFT_VERSION=5.9.3; \
+  mkdir -p /opt/swift; \
+  # Try ubuntu24.04 build first, fall back to ubuntu22.04 if not available
+  SWIFT_TAR_2404="swift-${SWIFT_VERSION}-RELEASE-ubuntu24.04.tar.gz"; \
+  SWIFT_URL_2404="https://swift.org/builds/swift-${SWIFT_VERSION}-release/ubuntu2404/swift-${SWIFT_VERSION}-RELEASE/${SWIFT_TAR_2404}"; \
+  SWIFT_TAR_2204="swift-${SWIFT_VERSION}-RELEASE-ubuntu22.04.tar.gz"; \
+  SWIFT_URL_2204="https://swift.org/builds/swift-${SWIFT_VERSION}-release/ubuntu2204/swift-${SWIFT_VERSION}-RELEASE/${SWIFT_TAR_2204}"; \
+  if curl -fsSL "$SWIFT_URL_2404" -o /tmp/swift.tar.gz; then \
+    echo "Using ubuntu24.04 Swift build"; \
+  elif curl -fsSL "$SWIFT_URL_2204" -o /tmp/swift.tar.gz; then \
+    echo "Fell back to ubuntu22.04 Swift build"; \
+  else \
+    echo "Could not download Swift for ubuntu24.04 or ubuntu22.04" >&2; exit 1; \
+  fi; \
+  tar -xzf /tmp/swift.tar.gz -C /opt/swift --strip-components=1; \
+  rm /tmp/swift.tar.gz; \
+  ln -s /opt/swift/usr/bin/swift /usr/local/bin/swift || true; \
 ) 2>&1 | tee -a $BUILD_LOG'
 
 # Put common locations into PATH (Dart is installed to /usr/lib/dart/bin by the package)
