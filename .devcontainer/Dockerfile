@@ -62,6 +62,7 @@ RUN bash -lc 'set -eux; ( \
   useradd -m -s /bin/bash vscode || true \
   && mkdir -p /home/vscode/.local/bin \
   && chown -R vscode:vscode /home/vscode \
+  && if [ -e "$BUILD_LOG" ]; then chown vscode:vscode "$BUILD_LOG" || true; chmod 666 "$BUILD_LOG" || true; fi \
 ) 2>&1 | tee -a $BUILD_LOG'
 
 # Quick verification (non-fatal) - log output for easier post-failure inspection
