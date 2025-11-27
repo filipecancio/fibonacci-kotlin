@@ -33,6 +33,16 @@ fi
 mkdir -p "$USER_HOME/.local/bin"
 chown -R "$TARGET_USER":"$TARGET_USER" "$USER_HOME/.local" || true
 
+# Configure git global user for the container user (idempotent)
+echo "Configuring git user for $TARGET_USER" | tee -a "$BUILD_LOG"
+if [ "$(id -un)" = "$TARGET_USER" ]; then
+  git config --global user.name "filipe cancio" || true
+  git config --global user.email "filipe.cancio@outlook.com" || true
+else
+  su - "$TARGET_USER" -s /bin/bash -c 'git config --global user.name "filipe cancio" || true'
+  su - "$TARGET_USER" -s /bin/bash -c 'git config --global user.email "filipe.cancio@outlook.com" || true'
+fi
+
 # Quick verification of installed tools
 echo "--- Verification after postCreate ---" | tee -a "$BUILD_LOG"
 su - "$TARGET_USER" -s /bin/bash -c 'echo "java:"; java -version || true'
