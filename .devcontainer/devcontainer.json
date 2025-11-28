@@ -41,6 +41,6 @@
       }
     }
   },
-  "postCreateCommand": "mkdir -p .vscode && bash .devcontainer/postCreate.sh",
+  "postCreateCommand": "mkdir -p .vscode ",
   "remoteUser": "vscode"
 }

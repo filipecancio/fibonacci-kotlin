@@ -1,1 +1,0 @@
-echo "SDKMAN already installed at $USER_HOME/.sdkman"
