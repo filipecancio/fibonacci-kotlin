@@ -41,6 +41,6 @@
       }
     }
   },
-  "postCreateCommand": "mkdir -p .vscode ",
+  "postCreateCommand": "mkdir -p .vscode && cp .devcontainer/settings.json .vscode/settings.json",
   "remoteUser": "vscode"
 }
